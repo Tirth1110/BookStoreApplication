@@ -1,0 +1,25 @@
+﻿@{
+    ViewData["Title"] = "All Books";
+}
+@*@{
+    //Pass All Data in Route * asp-all-route-data="@paramAttribute" *
+    var paramAttribute = new Dictionary<string, string>
+    {
+    {"name","Shah Tirth" },
+    {"city","Ahm" },
+    {"mobile","9429088222" }
+    };
+    }*@
+<div class="container">
+    <h1>Get All Book</h1>
+    <div class="row">
+        @foreach (var book in Model)
+        {
+            <div class="col-sm-4">
+                <partial name="_BookThumbnail" model="@book" />
+            </div>
+        }
+    </div>
+</div>
+
+

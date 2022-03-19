@@ -1,0 +1,108 @@
+﻿@model BookModel
+
+@{
+    ViewData["Title"] = "Book Detail " + Model.Title;
+}
+
+<h6 class="card-title text-dark">Book Details of @Model.Title</h6>
+<div class="row">
+    <div class="col-sm-6">
+        <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
+            <ol class="carousel-indicators">
+                @for (int i = 0; i < Model.Gallery.Count(); i++)
+                {
+                    <li data-target="#carouselExampleIndicators" data-slide-to="@i" class="@(i==0?"active": "")"></li>
+                }
+            </ol>
+            <div class="carousel-inner">
+                @for (int i = 0; i < Model.Gallery.Count(); i++)
+                {
+                    <div class="@(i==0?"carousel-item active": "carousel-item")">
+                        <img class="d-block w-100 max-height-img" src="/@Model.Gallery[i].URL" alt="@Model.Gallery[i].Name">
+                        <div class="carousel-caption d-none d-md-block">
+                            @*<h5>@Model.Title</h5>
+                                <p> @Model.Description</p>*@
+                        </div>
+                    </div>
+                }
+            </div>
+            <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                @*<span class="sr-only">Previous</span>*@
+            </a>
+            <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
+                @*<span class="sr-only">Next</span>*@
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            </a>
+        </div>
+    </div>
+    <div class="col-sm-6">
+        <div class="row">
+            <div class="col-md-12">
+                <h3>@Model.Title </h3>
+
+            </div>
+            <div class="col-sm-12 text-primary">
+                <span class="form-label">Author :- </span>
+                <span class="text-dark">@Model.Author</span>
+            </div>
+            <div class="col-md-12">
+                <p>
+                    @Model.Description
+                </p>
+            </div>
+            <div class="col-sm-4">
+                @*<a href="/@Model.BookPdfUrl" target="_blank" data-bs-toggle="modal" data-bs-target="#bookpdfModal" class="btn btn-outline-primary">Read Now</a>*@
+                <a data-toggle="modal" data-target="#bookpdfModal" class="btn btn-outline-primary">Read Now</a>
+            </div>
+            <div class="col-sm-6">
+                <ul class="list-group my-2">
+                    <li class="list-group-item"><span class="font-weight-bold">Category :- </span>@Model.CategoryName</li>
+                    <li class="list-group-item"><span class="font-weight-bold">Pages :-</span>@Model.TotalPages</li>
+                    <li class="list-group-item"><span class="font-weight-bold">Language :- </span>@Model.LanguageName</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-12 text-left text-dark" id="similarBook">
+        <hr class="my-3" />
+        <h4>Similar Book</h4>
+        <hr class="my-3" />
+        <div class="row">
+            @for (int i = 0; i <= 5; i++)
+            {
+                <div class="col-sm-4">
+                    <div class="card mb-3">
+                        <img class="card-img-top img-thumbnail text-center" src="https://www.adazing.com/wp-content/uploads/2019/02/open-book-clipart-03.png" alt="Card image cap">
+                        <div class="card-body">
+                            <h5 class="card-title">book.Title</h5>
+                            <p class="card-text cut-text-threeline">book.Description</p>
+                            <strong class="text-info">book.Author</strong>
+                            <a class="btn btn-outline-primary float-right" href="#!">View More</a>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</div>
+<!-- Modal -->
+<div class="modal fade" id="bookpdfModal" tabindex="-1" aria-labelledby="bookpdfModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="bookpdfModalLabel">PDF of @Model.Title </h5>
+                <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body text-center">
+                <embed src="/@(string.IsNullOrEmpty(Model.BookPdfUrl)?"Book Pdf Not Found":Model.BookPdfUrl)" class="w-100" />
+                <a href="/@(string.IsNullOrEmpty(Model.BookPdfUrl)?"Book Pdf Not Found":Model.BookPdfUrl)" target="_blank" class="btn btn-outline-primary my-3"><i class="fa fa-download mr-2"></i>Download Now</a>
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>

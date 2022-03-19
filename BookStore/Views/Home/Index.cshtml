@@ -1,0 +1,164 @@
+﻿@{
+    //intlization of dynmic data using ViewBag.myData
+    dynamic myData = ViewBag.myData;
+
+    ViewData["Title"] = "Home Page";
+    //remove layout from Index page it will be overwite
+    //Layout = null;
+
+    //ViewData
+    var bookInfo = ViewData["Books"] as BookModel;
+
+
+    //ViewData Attribute
+    var bookAttribute = ViewData["bookModel"] as BookModel;
+}
+@inject BookStore.Repository.IBookRepository _BookRepository
+<div class="text-center">
+    <environment include="Production">
+        <h4>Production</h4>
+    </environment>
+
+    <environment include="Development">
+        <h4>Development</h4>
+    </environment>
+
+    <h1 class="display-4">
+        Welcomes...
+        @ViewBag.MyName
+    </h1>
+    <p>
+        Nonumy nam dolores eu tempor lorem eos erat iriure dolore vel ut nulla dolores vero ea ut congue ipsum eu
+    </p>
+    @section breadcrumb{
+        <nav aria-label="breadcrumb d-none">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="#">Home</a></li>
+                <li class="breadcrumb-item"><a href="#">Library</a></li>
+                <li class="breadcrumb-item active" aria-current="page">Home Page</li>
+            </ol>
+        </nav>
+    }
+
+    @* using Viewbag *@
+    <p>@ViewBag.Data</p>
+
+
+    @*using dynmic keyword*@
+    <ul class="list-unstyled">
+        <li>@myData.Id</li>
+        <li>@myData.Name</li>
+        <li>@myData.Mobileno</li>
+    </ul>
+
+    <p>
+        <b>Print Type of Model Using ViewBage</b><br />
+        @ViewBag.Type
+        <ul class="list-unstyled">
+            <li>
+                Id = @ViewBag.Type.Id
+            </li>
+            <li>
+                Title = @ViewBag.Type.Title
+            </li>
+            <li>
+                Author = @ViewBag.Type.Author
+            </li>
+        </ul>
+    </p>
+    @* using ViewData *@
+    <p>
+        <b>Using ViewData</b>
+        <br />    @ViewData["Name"]
+    </p>
+    <p>
+        <ul class="list-unstyled">
+            <li>
+                Id = @bookInfo.Id
+            </li>
+            <li>
+                Title =@bookInfo.Title
+            </li>
+            <li>
+                Author = @bookInfo.Author
+            </li>
+        </ul>
+    </p>
+    @*ViewDataAttribute*@
+    <p>
+        <b>
+            -: ViewDataAttribute :-
+            <br />
+        </b>
+        @ViewData["myPropertyData"]
+    </p>
+
+    <p>
+        <b>BookList Using ViewDataAttribute</b>
+        <ul class="list-unstyled">
+            <li>Id :- @bookAttribute.Id</li>
+            <li>Title :- @bookAttribute.Title</li>
+            <li>Author :- @bookAttribute.Author</li>
+        </ul>
+    </p>
+
+    @*<h3 class="my-3 text-left">Top Books</h3>*@
+
+    @*here big is tag *@
+    <big>Top Books using Tag</big>
+    @*here big is attribute *@
+    <p big>Top Books Using Attribute</p>
+
+
+    @* Component using Directly using Razor Syntax using Component Name  *@
+
+    @*@await Component.InvokeAsync("TopBooks", new { count = 3 })*@
+
+    @*
+        Component using Tag Helpers <vc:top-books> </vc:top-books> comes from TopBooksViewComponent File
+        we can also pass Count = 5
+    *@
+
+    <vc:top-books count="4"></vc:top-books>
+
+
+
+    <h2>Search Book</h2>
+
+    @foreach (var item in await _BookRepository.GetAllBookData())
+    {
+        <h4>@item.Author</h4>
+    }
+
+    <div class="row d-none">
+        <div class="col-md-3">
+            @*<partial name="_BookThumbnail" model="new BookModel()"/> this and @Html.Partial("_BookThumbnail", new BookModel()) both are valid *@
+
+            @* Partial Returns HTMLContent it is IHtmlContent DataType *@
+            @* RenderPartial Returns no value it is void DataType, RenderPartial is Faster then Partial
+                <partial name="_BookThumbnail" model="new BookModel()"/>
+                is a best for use
+            *@
+            @* <partial name="_BookThumbnail" model="new BookModel()" />*@
+
+            @Html.Partial("_BookThumbnail", new BookModel())
+        </div>
+        <div class="col-md-3">
+            @await Html.PartialAsync("_BookThumbnail", new BookModel())
+        </div>
+        <div class="col-md-3">
+            @{
+                Html.RenderPartial("_BookThumbnail", new BookModel());
+            }
+        </div>
+        <div class="col-md-3">
+            @{
+                await Html.RenderPartialAsync("_BookThumbnail", new BookModel());
+            }
+        </div>
+    </div>
+    <hr class="my-4" />
+    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+</div>
+@section Scripts{
+}

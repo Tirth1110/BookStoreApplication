@@ -1,0 +1,85 @@
+1. what is auto mapper ?
+    >> helps us to transform one object type to another. It is a convention-based object-to-object mapper that requires very little configuration.
+ 2. Host Bulider 
+    >> Every Asp.Net Core is by default Console Application in Asp.Net Core
+3. Git Me je File Add Na Karvi hoy to Right Click ne Ignore karvu
+4. Middleware
+    >> Http Pipeline is configures in configure of Startup.cs File
+    >> We Can use multiple Middleware in asp.Net Core web Application
+    >> Middleware request & response time error handle kare che
+    >> Middleware use for auntication & autorization
+    >> secure controller > Access Some Specific user
+5. UseEndPoints
+    >> Map() & MapGet()
+        >>MapGet() use for get method from particular route
+        >>Map() use for all method from particular route
+6. Environment Variables
+7. Asp .net core Application type
+    A. > Web API
+    B. > Razor Pages
+    C. > MVC >> MVC pattern ma ConfigureService ma services.AddMvc();
+8. View Discovery
+    > Make TempView 
+    > Razor ViewEngine
+9. Razor ViewEngine
+    > View Engine >> View Engine is piece of code which use to render server side code into view 
+                    & ViewEngine works with View
+    > Razor Single & Multiple Line Syntax (In Multiple Code have number of Line)
+10. Stattic File Concept :-
+    > All Static File put in wwwroot folder 
+    > It's known as content folder / root folder
+11. Razor File complied 2 times
+    1. Bulid
+    2. Publish
+            >> Run Time Compilation -> Install Microsoft.AspNetCore.Mvc.Razor.RunTimeCompilation
+                                    -> Make chnages in Startup File in ConfigureServices(IServiceCollection services )
+                                        services.AddRazorPages().AddRazorRuntimeCompilation();
+                
+12. Layout name must be start with _ Ex(_Layout.cshtml)
+13. RenderSection & Section 
+        >> RenderSection use for Layout page allow javascript & jquery in through site
+        >> Section use for sub page like Index(Home),About us, contact page etc...
+        >> Ex :-   @await RenderSectionAsync("breadcrumb", required: false) 
+        >> Call in Index page  @section breadcrumb{
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="#">Home</a></li>
+                        <li class="breadcrumb-item"><a href="#">Library</a></li>
+                        <li class="breadcrumb-item active" aria-current="page">Home Page</li>
+                    </ol>
+                </nav>
+        }
+14. _ViewStart :-  Use of Viewstart when project is run then Layout File Call defaut 
+15. _ViewImports :- All Common Directve written here 
+                    >> _ViewImports Directves   
+                        1. @addTagHelper
+                        2. @removeTagHelper
+                        3. @tagHelperPrefix
+                        4. @using
+                        5. @model
+                        6. @inherits
+                        7. @inject
+
+                     * Scoped of _ViewImports  > if _ViewImports file is created in view folder is work for all views (SubView Directory in particular view) in view folder 
+                        otherwise  or if it's create in particular view then it's socped become only that's view 
+
+16. ViewBag >>  1. Loosly Binding 
+                2. not particular any type of data it means any type of data 
+                3. it's dyminc property
+                4. It's Scope only one ActionResult , You Can't Acess Cretaed ViewBag in other ActionResult
+                5. Type Cast is not required in ViewBag
+
+    ViewData >> 1. Strongly Binding 
+                2. When Pass The data on view must we have to do as type cast as Model Data
+
+    ViewBag vs ViewData -->  ViewBag works on dyminc data , ViewData on key value of principle or ViewDataDictionary type 
+
+    ViewDataAttribute --> Print Data Using Get; Set; method
+
+17.  Dynamic Views  --> 
+                1. No Complie time error 
+                2. Not Provide Intelligent
+                3. Not go to Architecture
+18. Tag Helpers 
+        --> Tag Helpers are used to render server side code on a razor (.cshtml) file to create and render HTML elements.
+        >> @addTagHelper , @removeTagHelper

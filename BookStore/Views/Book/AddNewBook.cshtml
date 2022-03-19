@@ -1,0 +1,183 @@
+﻿@model BookModel 
+@inject BookStore.Repository.ICategoryRepository _CategoryRepository
+    @inject BookStore.Repository.ILanguageRepository _LanguageRepository
+
+
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.0/sweetalert.min.js"></script>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.0/sweetalert.min.css"
+      rel="stylesheet" type="text/css" />
+<div class="d-flex justify-content-center">
+    @*<div class="spinner-border text-success" role="status" id="myLoader" style="display:none">
+        <span class="visually-hidden">Loading...</span>
+        </div>*@
+
+    <div style="display:none" id="myLoader"></div>
+</div>
+<form method="post" enctype="multipart/form-data" data-ajax="true" data-ajax-complete="myComplete"
+    data-ajax-success="mySuccess" data-ajax-failure="myFailure" data-ajax-loading="#myLoader"
+    asp-action="AddNewBook" asp-controller="Book">
+
+@*<form method="post" enctype="multipart/form-data" asp-controller="Book" asp-action="AddNewBook">*@
+    <div class="row">
+        <div class="col-sm-12">
+            <h3>Add New Book</h3>
+            <div asp-validation-summary="ModelOnly" class="text-danger font-weight-bold"></div>
+        </div>
+        @*<div class="col-sm-3">
+            <div class="form-group">
+            <label asp-for="Email" class="mb-2 form-label"></label>
+            <input asp-for="Email" class="form-control" />
+            <span asp-validation-for="Email" class="text-danger"></span>
+            </div>
+            </div>*@
+
+        @*<div class="col-sm-3">
+            <div class="form-group">
+                <label asp-for="LanguageId" class="mb-2 form-labelss"></label>
+                <select asp-for="LanguageId" asp-items="ViewBag.langaugeDropdown" class="form-control">
+                    <option value="">-- Select Language --</option>
+                </select>
+                <span asp-validation-for="LanguageId" class="text-danger"></span>
+            </div>
+        </div>*@
+
+
+        <div class="col-sm-3">
+            <div class="form-group">
+            <label asp-for="LanguageId" class="mb-2 form-labelss"></label>
+            <select asp-for="LanguageId" asp-items="(await _LanguageRepository.GetAllLanguage()).Select(x=>new SelectListItem() {Text=x.Name,Value=x.Id.ToString() }) " class="form-control">
+            <option value="">-- Select Language --</option>
+            </select>
+            <span asp-validation-for="LanguageId" class="text-danger"></span>
+            </div>
+            </div>
+
+
+
+        @*<div class="col-sm-3">
+            <div class="form-group">
+                <label asp-for="CategoryId" class="mb-2 form-labelss"></label>
+                <select asp-for="CategoryId" asp-items="ViewBag.catgeoryDropdown" class="form-control">
+                    <option value="">-- Select Category --</option>
+                </select>
+                <span asp-validation-for="CategoryId" class="text-danger"></span>
+            </div>
+        </div>*@
+
+
+        <div class="col-sm-3">
+            <div class="form-group">
+            <label asp-for="CategoryId" class="mb-2 form-labelss"></label>
+            <select asp-for="CategoryId" asp-items="(await _CategoryRepository.GetCategories()).Select(x=> new SelectListItem() { Text =x.Name,Value=x.Id.ToString()})" class="form-control">
+            <option value="">-- Select Category --</option>
+            </select>
+            <span asp-validation-for="CategoryId" class="text-danger"></span>
+            </div>
+            </div>
+        <div class="col-sm-3">
+            <div class="form-group">
+                <label asp-for="Title" class="mb-2 form-label"></label>
+                <input asp-for="Title" class="form-control" />
+                <span asp-validation-for="Title" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="col-sm-3">
+            <div class="form-group">
+                <label asp-for="Author" class="mb-2 form-label"></label>
+                <input asp-for="Author" class="form-control" />
+                <span asp-validation-for="Author" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="col-sm-4 my-3">
+            <div class="form-group">
+                <label asp-for="TotalPages" class="mb-2 form-label"></label>
+                <input asp-for="TotalPages" class="form-control" />
+                <span asp-validation-for="TotalPages" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="col-sm-4 my-3">
+            <div class="form-group">
+                <label asp-for="Description" class="mb-2 form-label"></label>
+                <textarea asp-for="Description" class="form-control"></textarea>
+                <span asp-validation-for="Description" class="text-danger"></span>
+            </div>
+        </div>
+
+        <div class="col-sm-4 my-3">
+            <div class="form-group">
+                <label asp-for="CoverPhoto" class="mb-2 form-label"></label>
+                <div class="mb-3">
+                    <input class="form-control" onchange="showBookImage(this)" asp-for="CoverPhoto">
+                </div>
+                <span asp-validation-for="CoverPhoto" class="text-danger"></span>
+                <img id="imgBookCover" height="100" width="100" />
+            </div>
+        </div>
+        <div class="col-sm-4 my-3">
+            <div class="form-group">
+                <label asp-for="GalleryFiles" class="mb-2 form-label"></label>
+                <div class="mb-3">
+                    <input class="form-control" asp-for="GalleryFiles">
+                </div>
+                <span asp-validation-for="GalleryFiles" class="text-danger"></span>
+            </div>
+        </div>
+
+        <div class="col-sm-4 my-3">
+            <div class="form-group">
+                <label asp-for="BookPdf" class="mb-2 form-label"></label>
+                <div class="mb-3">
+                    <input class="form-control" asp-for="BookPdf">
+                </div>
+                <span asp-validation-for="BookPdf" class="text-danger"></span>
+            </div>
+        </div>
+
+        <div class="col-sm-12 my-4">
+            <div class="form-group">
+                <input type="submit" class="btn btn-outline-success" value="Submit" />
+            </div>
+        </div>
+    </div>
+</form>
+@section Scripts{
+    @{
+    <partial name="_ValidationScriptsPartial" />
+        //if (ViewBag.IsSuccess != null)
+        //{
+        //    if (ViewBag.IsSuccess)
+        //    {
+        //        <script>
+        //            swal('Yeah!', 'Bood Added Successfully', 'success');
+        //            debugger
+        //            $('.confirm').click(function () {
+        //                window.location.href = "/book/GetAllBook/";
+        //            })
+        //        </script>
+        //    }
+        //}
+    <script>
+        function showBookImage(input) {
+            if (input.files && input.files[0]) {
+                var reader = new FileReader();
+                reader.onload = function (e) {
+                    $('#imgBookCover').css('visibility', 'visible');
+                    $('#imgBookCover').attr('src', e.target.result);
+                }
+                reader.readAsDataURL(input.files[0]);
+            }
+        }
+        function myComplete(data) {
+            //alert('I am from Complete');
+        }
+        function mySuccess(data) {
+            //alert('I am from Success');
+            debugger;
+            swal('Yeah!', 'Book Added Successfully', 'success');
+        }
+        function myFailure(data) {
+            //alert('I am from Failure');
+        }
+    </script>
+    }
+}

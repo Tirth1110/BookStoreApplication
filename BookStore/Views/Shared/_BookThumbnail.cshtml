@@ -1,0 +1,13 @@
+﻿
+@*@model BookModel*@
+<div class="card mb-3">
+    <img class="card-img-top img-thumbnail text-center min-height-img" src="/@(string.IsNullOrEmpty(Model.CoverPhotoUrl)?"Images/loader.gif":Model.CoverPhotoUrl)" height="100" width="100" alt="Cover Image of Book Unavalible">
+    <div class="card-body">
+        <h5 class="card-title">@(string.IsNullOrEmpty(Model.Title)?"Name of Book Unavalible":Model.Title)   </h5>
+        <p class="card-text cut-text-threeline">@(string.IsNullOrEmpty(Model.Description)? "Description of Book Unavalible" : Model.Description)</p>
+        <strong class="text-info">@(string.IsNullOrEmpty(Model.Author)?"Autor of Book Unavalible":Model.Author)</strong>
+        @*<a class="btn btn-outline-primary float-right" asp-controller="book" asp-action="getbook" asp-route-Id="@book.Id" asp-route-titleofBook="@book.Title" asp-all-route-data="@paramAttribute">View More</a>*@
+        @*<a class="btn btn-outline-primary float-right" asp-controller="book" asp-action="getbook" asp-route-Id="@book.Id" asp-route-titleofBook="@book.Title" asp-fragment="similarBook">View More</a>*@
+        <a class="btn btn-outline-primary" asp-route="bookDetailsRoute" asp-route-Id="@Model.Id">View More</a>
+    </div>
+</div>
