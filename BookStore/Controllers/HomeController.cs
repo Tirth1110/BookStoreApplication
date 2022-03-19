@@ -1,5 +1,6 @@
 ﻿using BookStore.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
@@ -14,6 +15,13 @@ namespace BookStore.Controllers
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
+        private readonly IConfiguration _configuration;
+
+        public HomeController(ILogger<HomeController> logger,IConfiguration configuration)
+        {
+            _logger = logger;
+            _configuration = configuration;
+        }
 
         #region [ViewData] is Attribute
         #endregion
@@ -25,10 +33,7 @@ namespace BookStore.Controllers
 
         [ViewData]
         public BookModel bookModel { get; set; }
-        public HomeController(ILogger<HomeController> logger)
-        {
-            _logger = logger;
-        }
+       
         [Route("~/")]
         #region we can use below method for route but if change name of Home Controller Or Index Action then we do change in below code it's solution is below [Route("[controller/action]")] You can also use controller level
         //[Route("home/index")]
@@ -73,28 +78,33 @@ namespace BookStore.Controllers
                 Author = "Jay Panchal",
                 Title = "C++ Book",
             };
-       
+
             #region
             myPropertyData = "Hello I am Tirth";
             #endregion
 
             #region Set Home Page Title
-                Title = "Home Page Title From Controller";
+            Title = "Home Page Title From Controller";
             #endregion
 
             #region ViewDataAttribute For Multiple Item in BookModel
             bookModel = new BookModel()
             {
-                Id=1,
-                Title="Java Book",
-                Author="Mayank Raval"
+                Id = 1,
+                Title = "Java Book",
+                Author = "Mayank Raval"
             };
             #endregion
 
             #endregion
+
+            //var appNameResult = _configuration["AppName"];
+            //var key1 = _configuration["infoObj:key1"];
+            //var key2 = _configuration["infoObj:key2"];
+            //var key3 = _configuration["infoObj:key3:key3obj1"];
             return View();
         }
-        public IActionResult Privacy(int id,string name)
+        public IActionResult Privacy(int id, string name)
         {
             return View();
         }
