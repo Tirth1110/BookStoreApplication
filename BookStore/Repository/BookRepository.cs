@@ -5,15 +5,19 @@ using System.Threading.Tasks;
 using BookStore.Data;
 using BookStore.Models;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 
 namespace BookStore.Repository
 {
     public class BookRepository : IBookRepository
     {
         private readonly BookStoreContext _context;
-        public BookRepository(BookStoreContext context)
+        private readonly IConfiguration _configuration;
+
+        public BookRepository(BookStoreContext context,IConfiguration configuration)
         {
             _context = context;
+            _configuration = configuration;
         }
         public async Task<int> AddNewBook(BookModel bookModel)
         {
@@ -60,7 +64,7 @@ namespace BookStore.Repository
                 Title = book.Title,
                 TotalPages = book.TotalPages,
                 CoverPhotoUrl = book.CoverPhotoUrl
-            }).ToListAsync();
+            }).OrderByDescending(b=>b.Id).ToListAsync();
         }
         #region Get top (count from view) Book For Home Page 
         public async Task<List<BookModel>> GetTopBookAsync(int count)
@@ -116,7 +120,7 @@ namespace BookStore.Repository
 
         public string AppName()
         {
-            return "Shah's Book Store Application"; 
+            return _configuration["AppName"]; 
         }
     }
 }
