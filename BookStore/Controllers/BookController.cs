@@ -65,7 +65,6 @@ namespace BookStore.Controllers
             //ViewBag.catgeoryDropdown = new SelectList(await _categoryRepository.GetCategories(), "Id", "Name");
             #endregion
 
-
             ViewBag.IsSuccess = isSuccess;
             ViewBag.BookId = bookId;
             return View(selectedLanguage);
@@ -109,7 +108,7 @@ namespace BookStore.Controllers
                 int id = await _bookRepository.AddNewBook(bookModel);
                 if (id > 0)
                 {
-                    return RedirectToAction(nameof(AddNewBook), new { isSuccess = true, bookid = id });
+                    return RedirectToAction(nameof(GetAllBook), new { isSuccess = true, bookid = id });
                 }
             }
             #region Fill Dynamic DropDown of Language & Category

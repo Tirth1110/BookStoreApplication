@@ -1,12 +1,13 @@
 ﻿@*@inject BookStore.Repository.IBookRepository _BookRepository*@
-@inject Microsoft.Extensions.Configuration.IConfiguration _Configuration
+@using Microsoft.Extensions.Configuration
+@inject IConfiguration _configuration
 <header>
     <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
         <div class="container">
             <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">
                 <img src="~/Images/logo.png" asp-append-version="true" height="100" width="100" class="img-fluid" alt="Alternate Text" />
                 @*<i class="font-weight-bold">@_BookRepository.AppName()</i>*@
-            <i class="font-weight-bold text-black">@_Configuration["AppName"]</i>
+                <i class="font-weight-bold text-black">@_configuration["AppName"]</i>
             </a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
                     aria-expanded="false" aria-label="Toggle navigation">
@@ -38,4 +39,11 @@
             </div>
         </div>
     </nav>
+
+    @if (_configuration.GetValue<bool>("NewBookAlert:DisplayBookAlert"))
+    {
+        <div class="alert alert-info" role="alert">
+            @(_configuration.GetValue<string>("NewBookAlert:BookName"))
+        </div>
+    }
 </header>

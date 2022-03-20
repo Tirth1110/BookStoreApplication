@@ -48,7 +48,6 @@ namespace BookStore.Models
         //public IEnumerable<IFormFile> GalleryFiles { get; set; }
         public IFormFileCollection GalleryFiles { get; set; }
         public List<GalleryModel> Gallery { get; set; }
-
         //PDF File
         [Display(Name = "Choose Pdf File")]
         [Required]

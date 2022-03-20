@@ -16,30 +16,29 @@ namespace BookStore
 {
     public class Startup
     {
+        public IConfiguration _configuration { get; }
         public Startup(IConfiguration configuration)
         {
-            Configuration = configuration;
+            _configuration = configuration;
         }
-        public IConfiguration Configuration { get; }
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllersWithViews();
             services.AddRazorPages().AddRazorRuntimeCompilation();
-            //services.AddRazorPages().AddRazorRuntimeCompilation().AddViewOptions(option =>
-            //{
-            //    option.HtmlHelperOptions.ClientValidationEnabled = true;
-            //});
+            services.AddRazorPages().AddRazorRuntimeCompilation().AddViewOptions(option =>
+            {
+                option.HtmlHelperOptions.ClientValidationEnabled = true;
+            });
 
             services.AddDbContext<BookStoreContext>(options => options.UseSqlServer(
-               Configuration.GetConnectionString("DefaultConnection")
-                ));
+               _configuration.GetConnectionString("DefaultConnection")));
 
             services.AddControllersWithViews();
-            #region only work in debug mode not in realse mode
-#if DEBUG
+            #region only work in debug mode not in release mode
+            #if DEBUG
             services.AddRazorPages().AddRazorRuntimeCompilation();
-#endif
+            #endif
             #endregion
 
             services.AddScoped<IBookRepository, BookRepository>();
@@ -96,11 +95,9 @@ namespace BookStore
 
                 #endregion End Conventional Routing Ex.
 
-
                 #region Attribute Routing Ex.
                 //endpoints.MapControllers();
                 #endregion
-
             });
         }
     }

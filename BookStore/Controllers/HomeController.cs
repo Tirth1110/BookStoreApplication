@@ -102,6 +102,14 @@ namespace BookStore.Controllers
             //var key1 = _configuration["infoObj:key1"];
             //var key2 = _configuration["infoObj:key2"];
             //var key3 = _configuration["infoObj:key3:key3obj1"];
+
+            var result = _configuration.GetValue<bool>("DisplayBookAlert");
+            var result1 = _configuration["DisplayBookAlert"];
+
+
+            var DisplayBookAlert = _configuration.GetValue<bool>("NewBookAlert:DisplayBookAlert");
+            var BookName = _configuration.GetValue<string>("NewBookAlert:BookName");
+
             return View();
         }
         public IActionResult Privacy(int id, string name)
