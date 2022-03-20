@@ -110,6 +110,13 @@ namespace BookStore.Controllers
             var DisplayBookAlert = _configuration.GetValue<bool>("NewBookAlert:DisplayBookAlert");
             var BookName = _configuration.GetValue<string>("NewBookAlert:BookName");
 
+            
+            var newBookAlert = _configuration.GetSection("NewBookAlert");
+            var DisplayBookAlertSection = newBookAlert.GetValue<bool>("DisplayBookAlert");
+            var BookNameSection = newBookAlert.GetValue<string>("BookName");
+
+
+
             return View();
         }
         public IActionResult Privacy(int id, string name)

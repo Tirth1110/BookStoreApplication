@@ -23,7 +23,7 @@ namespace BookStore.Controllers
         public BookController(IBookRepository bookRepository,
             ILanguageRepository languageRepository,
             ICategoryRepository categoryRepository,
-           IWebHostEnvironment webHostEnvironment)
+            IWebHostEnvironment webHostEnvironment)
         {
             _bookRepository = bookRepository;
             _languageRepository = languageRepository;
