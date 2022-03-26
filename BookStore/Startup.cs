@@ -1,4 +1,5 @@
 using BookStore.Data;
+using BookStore.Models;
 using BookStore.Repository;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -36,14 +37,17 @@ namespace BookStore
 
             services.AddControllersWithViews();
             #region only work in debug mode not in release mode
-            #if DEBUG
+#if DEBUG
             services.AddRazorPages().AddRazorRuntimeCompilation();
-            #endif
+#endif
             #endregion
 
             services.AddScoped<IBookRepository, BookRepository>();
             services.AddScoped<ILanguageRepository, LanguageRepository>();
             services.AddScoped<ICategoryRepository, CategoryRepository>();
+
+            //Get Value from appsetting.json File of Key (NewBookAlert)
+            services.Configure<NewBookAlertConfig>(_configuration.GetSection("NewBookAlert"));
         }
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)

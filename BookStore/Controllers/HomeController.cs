@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Options;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -16,11 +17,16 @@ namespace BookStore.Controllers
     {
         private readonly ILogger<HomeController> _logger;
         private readonly IConfiguration _configuration;
+        private readonly NewBookAlertConfig _newBookAlertConfigs;
 
-        public HomeController(ILogger<HomeController> logger,IConfiguration configuration)
+        public HomeController(ILogger<HomeController> logger, IConfiguration configuration, IOptions<NewBookAlertConfig> newBookAlertConfigs)
         {
             _logger = logger;
             _configuration = configuration;
+
+            #region using IOptions Method 
+            _newBookAlertConfigs = newBookAlertConfigs.Value;
+            #endregion
         }
 
         #region [ViewData] is Attribute
@@ -33,7 +39,7 @@ namespace BookStore.Controllers
 
         [ViewData]
         public BookModel bookModel { get; set; }
-       
+
         [Route("~/")]
         #region we can use below method for route but if change name of Home Controller Or Index Action then we do change in below code it's solution is below [Route("[controller/action]")] You can also use controller level
         //[Route("home/index")]
@@ -110,13 +116,17 @@ namespace BookStore.Controllers
             var DisplayBookAlert = _configuration.GetValue<bool>("NewBookAlert:DisplayBookAlert");
             var BookName = _configuration.GetValue<string>("NewBookAlert:BookName");
 
-            
-            var newBookAlert = _configuration.GetSection("NewBookAlert");
-            var DisplayBookAlertSection = newBookAlert.GetValue<bool>("DisplayBookAlert");
-            var BookNameSection = newBookAlert.GetValue<string>("BookName");
+            //Get NewBookAlert from NewBookAlert
+            //var newBookAlertDataType = _configuration.GetSection("NewBookAlert").GetValue<bool>("DisplayBookAlert");
+            //var newBookAlert = _configuration.GetSection("NewBookAlert");
+            //var DisplayBookAlertSection = newBookAlert.GetValue<bool>("DisplayBookAlert");
+            //var BookNameSection = newBookAlert.GetValue<string>("BookName");
 
+            //var newBookAlertModel = new NewBookAlertConfig();
+            //_configuration.Bind("NewBookAlert", newBookAlertModel);
+            //bool isDisplay = newBookAlertModel.DisplayBookAlert;
 
-
+            bool isDisplay = _newBookAlertConfigs.DisplayBookAlert;
             return View();
         }
         public IActionResult Privacy(int id, string name)

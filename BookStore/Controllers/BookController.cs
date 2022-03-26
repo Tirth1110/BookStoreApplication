@@ -38,8 +38,8 @@ namespace BookStore.Controllers
             return View(bookFromRepo);
         }
         //[Route("book/book-details/{id}", Name = "bookDetailsRoute")]
-        //[Route("book-details/{id}", Name = "bookDetailsRoute")]
-        [Route("~/book-details/{id:int}", Name = "bookDetailsRoute")]
+        [Route("book-details/{id}", Name = "bookDetailsRoute")]
+        //[Route("~/book-details/{id:int}", Name = "bookDetailsRoute")]
         public async Task<ViewResult> GetBook(int Id)
         {
             var bookdata = await _bookRepository.GetBookById(Id);
@@ -54,10 +54,10 @@ namespace BookStore.Controllers
         public async Task<ViewResult> AddNewBook(bool isSuccess = false, int bookId = 0)
         {
             #region for default selection 
-            var selectedLanguage = new BookModel
-            {
-                //Language = "3"
-            };
+            //var selectedLanguage = new BookModel
+            //{
+            //    //Language = "3"
+            //};
             #endregion
 
             #region Fill Dynamic DropDown of Language & Category
@@ -67,7 +67,7 @@ namespace BookStore.Controllers
 
             ViewBag.IsSuccess = isSuccess;
             ViewBag.BookId = bookId;
-            return View(selectedLanguage);
+            return View();
         }
         [HttpPost]
         public async Task<IActionResult> AddNewBook(BookModel bookModel)
