@@ -4,6 +4,9 @@
 @inject Microsoft.Extensions.Options.IOptions<NewBookAlertConfig> _newBookConfigurationOption
 
 
+@inject Microsoft.Extensions.Options.IOptionsSnapshot<NewBookAlertConfig> _newBookConfigurationOption
+
+
 @{
     var newBookAlert = _configuration.GetSection("NewBookAlert");
 }
@@ -15,7 +18,13 @@
 
 @*Using IOptions *@
 @{
-    var newBookConfigurationOption = _newBookConfigurationOption.Value.DisplayBookAlert;
+    var newBookAlertConfigurationIOption = _newBookConfigurationOption.Value;
+}
+
+
+@*Using IOptionsSnapshot *@
+@{
+    var newBookAlertConfigurationIOptionsSnapshot = _newBookConfigurationOption.Value;
 }
 
 <header>
@@ -84,12 +93,25 @@
             @newBookAlertModel.BookName
         </div>
     }
-    @* Print Using IOptions from NewBookAlert Obj *@
 
-    @if (_newBookConfigurationOption.Value.DisplayBookAlert)
+
+    @*Print Using IOptions from NewBookAlert Obj *@
+    @*IOption Ma application restart thay pachi new effect thay browser fresh par nai*@
+    @if (newBookAlertConfigurationIOption.DisplayBookAlert)
     {
         <div class="alert alert-info" role="alert">
-            @_newBookConfigurationOption.Value.BookName
+            @newBookAlertConfigurationIOption.BookName
+        </div>
+    }
+
+
+    @*Print Using IOptionsSnapshot from NewBookAlert Obj *@
+    @*IOptionsSnapshot Ma application Refresh karie etle*@
+
+    @if (newBookAlertConfigurationIOptionsSnapshot.DisplayBookAlert)
+    {
+        <div class="alert alert-dark" role="alert">
+            @newBookAlertConfigurationIOptionsSnapshot.BookName
         </div>
     }
 </header>

@@ -46,8 +46,9 @@ namespace BookStore
             services.AddScoped<ILanguageRepository, LanguageRepository>();
             services.AddScoped<ICategoryRepository, CategoryRepository>();
 
-            //Get Value from appsetting.json File of Key (NewBookAlert)
+            #region Get Value from appsetting.json File of Key (NewBookAlert) Using IOptions 
             services.Configure<NewBookAlertConfig>(_configuration.GetSection("NewBookAlert"));
+            #endregion
         }
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)

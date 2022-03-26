@@ -19,7 +19,7 @@ namespace BookStore.Controllers
         private readonly IConfiguration _configuration;
         private readonly NewBookAlertConfig _newBookAlertConfigs;
 
-        public HomeController(ILogger<HomeController> logger, IConfiguration configuration, IOptions<NewBookAlertConfig> newBookAlertConfigs)
+        public HomeController(ILogger<HomeController> logger, IConfiguration configuration, IOptions<NewBookAlertConfig> newBookAlertConfigs, IOptionsSnapshot<NewBookAlertConfig> newBookAlertConfigsIOptionSnapshot)
         {
             _logger = logger;
             _configuration = configuration;
@@ -27,6 +27,11 @@ namespace BookStore.Controllers
             #region using IOptions Method 
             _newBookAlertConfigs = newBookAlertConfigs.Value;
             #endregion
+
+            #region using IOptionsSnapshot Method 
+            _newBookAlertConfigs = newBookAlertConfigsIOptionSnapshot.Value;
+            #endregion
+
         }
 
         #region [ViewData] is Attribute
@@ -126,7 +131,17 @@ namespace BookStore.Controllers
             //_configuration.Bind("NewBookAlert", newBookAlertModel);
             //bool isDisplay = newBookAlertModel.DisplayBookAlert;
 
+            #region using IOptions Method 
             bool isDisplay = _newBookAlertConfigs.DisplayBookAlert;
+            #endregion
+
+
+            #region using IOptions Method 
+            bool isDisplayIOptionSnapshot = _newBookAlertConfigs.DisplayBookAlert;
+            #endregion
+
+
+
             return View();
         }
         public IActionResult Privacy(int id, string name)
