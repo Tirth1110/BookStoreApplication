@@ -46,6 +46,8 @@ namespace BookStore
             services.AddScoped<ILanguageRepository, LanguageRepository>();
             services.AddScoped<ICategoryRepository, CategoryRepository>();
 
+            services.AddSingleton<IMessageRepository, MessageRepository>();
+
             #region Get Value from appsetting.json File of Key (NewBookAlert) Using IOptions 
             services.Configure<NewBookAlertConfig>(_configuration.GetSection("NewBookAlert"));
             #endregion

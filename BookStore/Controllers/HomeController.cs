@@ -1,4 +1,5 @@
 ﻿using BookStore.Models;
+using BookStore.Repository;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
@@ -17,9 +18,10 @@ namespace BookStore.Controllers
     {
         private readonly ILogger<HomeController> _logger;
         private readonly IConfiguration _configuration;
+        private readonly IMessageRepository _messageRepository;
         private readonly NewBookAlertConfig _newBookAlertConfigs;
 
-        public HomeController(ILogger<HomeController> logger, IConfiguration configuration, IOptions<NewBookAlertConfig> newBookAlertConfigs, IOptionsSnapshot<NewBookAlertConfig> newBookAlertConfigsIOptionSnapshot)
+        public HomeController(ILogger<HomeController> logger, IConfiguration configuration, IOptions<NewBookAlertConfig> newBookAlertConfigs, IOptionsSnapshot<NewBookAlertConfig> newBookAlertConfigsIOptionSnapshot,IMessageRepository messageRepository)
         {
             _logger = logger;
             _configuration = configuration;
@@ -32,6 +34,9 @@ namespace BookStore.Controllers
             _newBookAlertConfigs = newBookAlertConfigsIOptionSnapshot.Value;
             #endregion
 
+            #region message Repository
+            _messageRepository = messageRepository;
+            #endregion
         }
 
         #region [ViewData] is Attribute
@@ -140,7 +145,9 @@ namespace BookStore.Controllers
             bool isDisplayIOptionSnapshot = _newBookAlertConfigs.DisplayBookAlert;
             #endregion
 
-
+            #region message Repository
+            var value = _messageRepository.GetName();
+            #endregion
 
             return View();
         }
