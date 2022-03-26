@@ -20,6 +20,7 @@ namespace BookStore.Controllers
         private readonly IConfiguration _configuration;
         private readonly IMessageRepository _messageRepository;
         private readonly NewBookAlertConfig _newBookAlertConfigs;
+        private readonly NewBookAlertConfig _thirdPartyBookAlertConfigs;
 
         public HomeController(ILogger<HomeController> logger, IConfiguration configuration, IOptions<NewBookAlertConfig> newBookAlertConfigs, IOptionsSnapshot<NewBookAlertConfig> newBookAlertConfigsIOptionSnapshot,IMessageRepository messageRepository)
         {
@@ -32,6 +33,7 @@ namespace BookStore.Controllers
 
             #region using IOptionsSnapshot Method 
             _newBookAlertConfigs = newBookAlertConfigsIOptionSnapshot.Value;
+            _thirdPartyBookAlertConfigs = newBookAlertConfigsIOptionSnapshot.Get("ThirdPartyBook");
             #endregion
 
             #region message Repository
@@ -141,8 +143,9 @@ namespace BookStore.Controllers
             #endregion
 
 
-            #region using IOptions Method 
+            #region using IOptionsSnapshot Method 
             bool isDisplayIOptionSnapshot = _newBookAlertConfigs.DisplayBookAlert;
+            bool isDisplay1IOptionSnapshot = _thirdPartyBookAlertConfigs.DisplayBookAlert;
             #endregion
 
             #region message Repository

@@ -4,8 +4,7 @@
 @inject Microsoft.Extensions.Options.IOptions<NewBookAlertConfig> _newBookConfigurationOption
 
 
-@inject Microsoft.Extensions.Options.IOptionsSnapshot<NewBookAlertConfig> _newBookConfigurationOption
-
+@inject Microsoft.Extensions.Options.IOptionsSnapshot<NewBookAlertConfig> _newBookConfigurationOptionSnapshot
 
 @{
     var newBookAlert = _configuration.GetSection("NewBookAlert");
@@ -24,7 +23,15 @@
 
 @*Using IOptionsSnapshot *@
 @{
-    var newBookAlertConfigurationIOptionsSnapshot = _newBookConfigurationOption.Value;
+    var newBookAlertConfigurationIOptionsSnapshot = _newBookConfigurationOptionSnapshot.Value;
+}
+
+
+@{
+
+    //Get("InternalBook") && Get("ThirdPartyBook") Gets from Startup Files
+    var _bookBookAlertConfigs = _newBookConfigurationOptionSnapshot.Get("InternalBook");
+    var _thirdPartyBookAlertConfigs = _newBookConfigurationOptionSnapshot.Get("ThirdPartyBook");
 }
 
 <header>
@@ -94,7 +101,6 @@
         </div>
     }
 
-
     @*Print Using IOptions from NewBookAlert Obj *@
     @*IOption Ma application restart thay pachi new effect thay browser fresh par nai*@
     @if (newBookAlertConfigurationIOption.DisplayBookAlert)
@@ -104,7 +110,6 @@
         </div>
     }
 
-
     @*Print Using IOptionsSnapshot from NewBookAlert Obj *@
     @*IOptionsSnapshot Ma application Refresh karie etle*@
 
@@ -112,6 +117,16 @@
     {
         <div class="alert alert-dark" role="alert">
             @newBookAlertConfigurationIOptionsSnapshot.BookName
+        </div>
+    }
+    @*Print Using IOptionsSnapshot ThirdParty Books *@
+
+    @if (_thirdPartyBookAlertConfigs.DisplayBookAlert == true && _bookBookAlertConfigs.DisplayBookAlert==true)
+    {
+        <div class="alert alert-success" role="alert">
+            @_thirdPartyBookAlertConfigs.BookName 
+            <p> & </p>
+            @_bookBookAlertConfigs.BookName
         </div>
     }
 </header>

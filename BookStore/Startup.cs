@@ -49,7 +49,9 @@ namespace BookStore
             services.AddSingleton<IMessageRepository, MessageRepository>();
 
             #region Get Value from appsetting.json File of Key (NewBookAlert) Using IOptions 
-            services.Configure<NewBookAlertConfig>(_configuration.GetSection("NewBookAlert"));
+            //services.Configure<NewBookAlertConfig>("", _configuration.GetSection("NewBookAlert"));
+            services.Configure<NewBookAlertConfig>("InternalBook", _configuration.GetSection("NewBookAlert"));
+            services.Configure<NewBookAlertConfig>("ThirdPartyBook",_configuration.GetSection("ThirdPartyBook"));
             #endregion
         }
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
