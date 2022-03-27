@@ -47,6 +47,16 @@ namespace BookStore
             services.AddIdentity<ApplicationUser, IdentityRole>()
                 .AddEntityFrameworkStores<BookStoreContext>();
 
+            //Change Password formate for IdentityBy Default Given
+            services.Configure<IdentityOptions>(options =>
+            {
+                options.Password.RequiredLength = 5;
+                options.Password.RequiredUniqueChars = 1;
+                options.Password.RequireDigit = false;
+                options.Password.RequireLowercase = false;
+                options.Password.RequireUppercase = false;
+                options.Password.RequireNonAlphanumeric = false;
+            });
 
             services.AddControllersWithViews();
 
