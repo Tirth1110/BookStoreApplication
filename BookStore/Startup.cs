@@ -57,9 +57,16 @@ namespace BookStore
                 options.Password.RequireUppercase = false;
                 options.Password.RequireNonAlphanumeric = false;
             });
+            //for Login Redirect if not logged in then redirection 
+            services.ConfigureApplicationCookie(config =>
+            {
+                //Path Comes From appsetting.json file
+                config.LoginPath = _configuration["Application:SinginPath"];
+            });
 
             services.AddControllersWithViews();
 
+            //add All IRepository & Repository as Services
             services.AddScoped<IBookRepository, BookRepository>();
             services.AddScoped<ILanguageRepository, LanguageRepository>();
             services.AddScoped<ICategoryRepository, CategoryRepository>();

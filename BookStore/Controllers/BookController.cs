@@ -10,6 +10,7 @@ using Microsoft.AspNetCore.Hosting;
 using System.IO;
 using System;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Authorization;
 
 namespace BookStore.Controllers
 {
@@ -51,6 +52,7 @@ namespace BookStore.Controllers
             return null;
         }
         //[Route("book/add-new-book", Name = "addNewBookRoute")]
+        [Authorize]
         public async Task<ViewResult> AddNewBook(bool isSuccess = false, int bookId = 0)
         {
             #region for default selection 
