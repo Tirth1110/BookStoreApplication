@@ -42,5 +42,25 @@ namespace BookStore.Controllers
             }
             return View();
         }
+        [Route("singin")]
+        public async Task<ViewResult> Singin()
+        {
+            return View();
+        }
+        [Route("singin")]
+        [HttpPost]
+        public async Task<IActionResult> Singin(SignInModel signInModel)
+        {
+            if (ModelState.IsValid)
+            {
+                var result = await _accountRepository.PasswordSingInAsync(signInModel);
+                if (result.Succeeded)
+                {
+                    return RedirectToAction("index", "home");
+                }
+                ModelState.AddModelError("", "Invalid User Name Password");
+            }
+            return View(signInModel);
+        }
     }
 }
