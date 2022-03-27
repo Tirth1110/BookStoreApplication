@@ -1,4 +1,5 @@
 using BookStore.Data;
+using BookStore.Helpers;
 using BookStore.Models;
 using BookStore.Repository;
 using Microsoft.AspNetCore.Builder;
@@ -73,6 +74,9 @@ namespace BookStore
             services.AddScoped<IAccountRepository, AccountRepository>();
 
             services.AddSingleton<IMessageRepository, MessageRepository>();
+
+            //Add Claims in Helpers ... 
+            services.AddScoped<IUserClaimsPrincipalFactory<ApplicationUser>, ApplicationUserClaimsPrinicialFactory>();
 
             #region Get Value from appsetting.json File of Key (NewBookAlert) Using IOptions 
             services.Configure<NewBookAlertConfig>("InternalBook", _configuration.GetSection("NewBookAlert"));
