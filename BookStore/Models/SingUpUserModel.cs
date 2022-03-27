@@ -23,12 +23,12 @@ namespace BookStore.Models
         public string Email { get; set; }
         [Required]
         [Display(Name = "Enter Your Password")]
-        [Compare("ConfirmPassword", ErrorMessage = "Enter Your ConfirmPassword Same as Password")]
         [DataType(DataType.Password)]
         public string Password { get; set; }
         [Required]
         [Display(Name = "Enter Your Confirm Password")]
         [DataType(DataType.Password)]
+        [Compare("Password", ErrorMessage = "Enter Your ConfirmPassword Same as Password")]
         public string ConfirmPassword { get; set; }
     }
 }

@@ -165,7 +165,6 @@ namespace BookStore.Controllers
             var value = _messageRepository.GetName();
             #endregion
 
-
             #region Get User Id as String & isUserLogged as Boolean(Bool)
             var userId = _userServices.GetUserId();
             var isUserLogged = _userServices.IsAuthencated();

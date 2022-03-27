@@ -10,11 +10,12 @@
             <span class="btn btn-secondary rounded-circle">
                 @(User.FindFirst("UserFirstName").Value.ToString().Substring(0, 1) + "" + User.FindFirst("UserLastName").Value.ToString().Substring(0, 1))
             </span>
-           
+
             <span class="caret"></span>
         </button>
         <ul class="dropdown-menu">
             <li>
+                <a class="dropdown-item" asp-action="ChangePassword" asp-controller="Account">Change Password</a>
                 <a class="dropdown-item" asp-action="SignOut" asp-controller="Account">SignOut</a>
             </li>
         </ul>
