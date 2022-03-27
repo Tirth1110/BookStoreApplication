@@ -13,9 +13,10 @@
         <div class="card-body">
             <hr />
             <div class="row">
-
                 <div class="col-md-6">
-                    <form asp-action="Singin">
+                    @* Remove asp-action="Singin" for redirection for last opened page *@
+                    @*<form asp-action="Singin">*@
+                        <form method="post">
                         <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                         <div class="form-group">
                             <label asp-for="Email" class="control-label"></label>

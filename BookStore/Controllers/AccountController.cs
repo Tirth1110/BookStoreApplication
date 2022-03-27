@@ -49,13 +49,18 @@ namespace BookStore.Controllers
         }
         [Route("singin")]
         [HttpPost]
-        public async Task<IActionResult> Singin(SignInModel signInModel)
+        public async Task<IActionResult> Singin(SignInModel signInModel,string returnUrl)
         {
             if (ModelState.IsValid)
             {
                 var result = await _accountRepository.PasswordSingInAsync(signInModel);
                 if (result.Succeeded)
                 {
+                    if (!string.IsNullOrEmpty(returnUrl))
+                    {
+                        //return previous page URL Like (AddNewBook)
+                        return LocalRedirect(returnUrl);
+                    }
                     return RedirectToAction("index", "home");
                 }
                 ModelState.AddModelError("", "Invalid User Name Password");
