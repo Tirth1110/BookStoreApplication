@@ -73,14 +73,24 @@
                     </li>
                 </ul>
             </div>
+            <div class="navbar-collapse collapse d-sm-inline-flex justify-content-end">
+                <ul class="navbar-nav flex-grow-1">
+                    <li class="nav-item">
+                        <a class="nav-link btn btn-sm btn-outline-primary" asp-area="" asp-controller="account" asp-action="singup">Sing Up</a>
+                    </li>
+                </ul>
+
+            </div>
         </div>
     </nav>
+
 
 
     @* Using _configuration method *@
     @if (_configuration.GetValue<bool>("NewBookAlert:DisplayBookAlert"))
     {
-        <div class="alert alert-info" role="alert">
+        <div class="alert alert-info d-none" role="alert">
+            <h4>Hello text</h4>
             @(_configuration.GetValue<string>("NewBookAlert:BookName"))
         </div>
     }
@@ -88,7 +98,7 @@
     @* Using newBookAlert GetSection Method *@
     @if (newBookAlert.GetValue<bool>("DisplayBookAlert"))
     {
-        <div class="alert alert-info" role="alert">
+        <div class="alert alert-info d-none" role="alert">
             @(newBookAlert.GetValue<string>("BookName"))
         </div>
     }
@@ -96,7 +106,7 @@
     @* Print _configuration from NewBookAlert  *@
     @if (newBookAlertModel.DisplayBookAlert)
     {
-        <div class="alert alert-info" role="alert">
+        <div class="alert alert-info d-none" role="alert">
             @newBookAlertModel.BookName
         </div>
     }
@@ -105,7 +115,7 @@
     @*IOption Ma application restart thay pachi new effect thay browser fresh par nai*@
     @if (newBookAlertConfigurationIOption.DisplayBookAlert)
     {
-        <div class="alert alert-info" role="alert">
+        <div class="alert alert-info d-none" role="alert">
             @newBookAlertConfigurationIOption.BookName
         </div>
     }
@@ -115,16 +125,16 @@
 
     @if (newBookAlertConfigurationIOptionsSnapshot.DisplayBookAlert)
     {
-        <div class="alert alert-dark" role="alert">
+        <div class="alert alert-dark d-none" role="alert">
             @newBookAlertConfigurationIOptionsSnapshot.BookName
         </div>
     }
     @*Print Using IOptionsSnapshot ThirdParty Books *@
 
-    @if (_thirdPartyBookAlertConfigs.DisplayBookAlert == true && _bookBookAlertConfigs.DisplayBookAlert==true)
+    @if (_thirdPartyBookAlertConfigs.DisplayBookAlert == true && _bookBookAlertConfigs.DisplayBookAlert == true)
     {
-        <div class="alert alert-success" role="alert">
-            @_thirdPartyBookAlertConfigs.BookName 
+        <div class="alert alert-success d-none" role="alert">
+            @_thirdPartyBookAlertConfigs.BookName
             <p> & </p>
             @_bookBookAlertConfigs.BookName
         </div>

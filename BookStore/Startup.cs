@@ -4,6 +4,7 @@ using BookStore.Repository;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -27,6 +28,7 @@ namespace BookStore
         {
             services.AddControllersWithViews();
             services.AddRazorPages().AddRazorRuntimeCompilation();
+
             services.AddRazorPages().AddRazorRuntimeCompilation().AddViewOptions(option =>
             {
                 option.HtmlHelperOptions.ClientValidationEnabled = true;
@@ -35,23 +37,29 @@ namespace BookStore
             services.AddDbContext<BookStoreContext>(options => options.UseSqlServer(
                _configuration.GetConnectionString("DefaultConnection")));
 
+
+            //Use Identity in BookStore Application 
+            //We Have Install microsoft.aspnetcore.identity.entityframeworkcore from nuget packages
+            //services.AddIdentity<IdentityUser, IdentityRole>()
+            //    .AddEntityFrameworkStores<BookStoreContext>();
+
+            //Add Some Column In IdentityUser Tbl
+            services.AddIdentity<ApplicationUser, IdentityRole>()
+                .AddEntityFrameworkStores<BookStoreContext>();
+
+
             services.AddControllersWithViews();
-            #region only work in debug mode not in release mode
-#if DEBUG
-            services.AddRazorPages().AddRazorRuntimeCompilation();
-#endif
-            #endregion
 
             services.AddScoped<IBookRepository, BookRepository>();
             services.AddScoped<ILanguageRepository, LanguageRepository>();
             services.AddScoped<ICategoryRepository, CategoryRepository>();
+            services.AddScoped<IAccountRepository, AccountRepository>();
 
             services.AddSingleton<IMessageRepository, MessageRepository>();
 
             #region Get Value from appsetting.json File of Key (NewBookAlert) Using IOptions 
-            //services.Configure<NewBookAlertConfig>("", _configuration.GetSection("NewBookAlert"));
             services.Configure<NewBookAlertConfig>("InternalBook", _configuration.GetSection("NewBookAlert"));
-            services.Configure<NewBookAlertConfig>("ThirdPartyBook",_configuration.GetSection("ThirdPartyBook"));
+            services.Configure<NewBookAlertConfig>("ThirdPartyBook", _configuration.GetSection("ThirdPartyBook"));
             #endregion
         }
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -71,6 +79,8 @@ namespace BookStore
             app.UseStaticFiles();
 
             app.UseRouting();
+            //For Identity Authentication 
+            app.UseAuthentication();
             app.UseDeveloperExceptionPage();
             app.UseAuthorization();
 

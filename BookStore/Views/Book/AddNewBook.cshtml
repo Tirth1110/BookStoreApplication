@@ -1,4 +1,4 @@
-﻿@model BookModel 
+﻿@model BookModel
 @inject BookStore.Repository.ICategoryRepository _CategoryRepository
 @inject BookStore.Repository.ILanguageRepository _LanguageRepository
 
@@ -13,11 +13,11 @@
 
     <div style="display:none" id="myLoader"></div>
 </div>
-<form method="post" enctype="multipart/form-data" data-ajax="true" data-ajax-complete="myComplete"
+@*<form method="post" enctype="multipart/form-data" data-ajax="true" data-ajax-complete="myComplete"
     data-ajax-success="mySuccess" data-ajax-failure="myFailure" data-ajax-loading="#myLoader"
-    asp-action="AddNewBook" asp-controller="Book">
+    asp-action="AddNewBook" asp-controller="Book">*@
 
-@*<form method="post" enctype="multipart/form-data" asp-controller="Book" asp-action="AddNewBook">*@
+<form method="post" enctype="multipart/form-data" asp-controller="Book" asp-action="AddNewBook">
     <div class="row">
         <div class="col-sm-12">
             <h3>Add New Book</h3>
@@ -32,48 +32,48 @@
             </div>*@
 
         @*<div class="col-sm-3">
+                <div class="form-group">
+                    <label asp-for="LanguageId" class="mb-2 form-labelss"></label>
+                    <select asp-for="LanguageId" asp-items="ViewBag.langaugeDropdown" class="form-control">
+                        <option value="">-- Select Language --</option>
+                    </select>
+                    <span asp-validation-for="LanguageId" class="text-danger"></span>
+                </div>
+            </div>*@
+
+
+        <div class="col-sm-3">
             <div class="form-group">
                 <label asp-for="LanguageId" class="mb-2 form-labelss"></label>
-                <select asp-for="LanguageId" asp-items="ViewBag.langaugeDropdown" class="form-control">
+                <select asp-for="LanguageId" asp-items="(await _LanguageRepository.GetAllLanguage()).Select(x=>new SelectListItem() {Text=x.Name,Value=x.Id.ToString() }) " class="form-control">
                     <option value="">-- Select Language --</option>
                 </select>
                 <span asp-validation-for="LanguageId" class="text-danger"></span>
             </div>
-        </div>*@
-
-
-        <div class="col-sm-3">
-            <div class="form-group">
-            <label asp-for="LanguageId" class="mb-2 form-labelss"></label>
-            <select asp-for="LanguageId" asp-items="(await _LanguageRepository.GetAllLanguage()).Select(x=>new SelectListItem() {Text=x.Name,Value=x.Id.ToString() }) " class="form-control">
-            <option value="">-- Select Language --</option>
-            </select>
-            <span asp-validation-for="LanguageId" class="text-danger"></span>
-            </div>
-            </div>
+        </div>
 
 
 
         @*<div class="col-sm-3">
-            <div class="form-group">
-                <label asp-for="CategoryId" class="mb-2 form-labelss"></label>
-                <select asp-for="CategoryId" asp-items="ViewBag.catgeoryDropdown" class="form-control">
-                    <option value="">-- Select Category --</option>
-                </select>
-                <span asp-validation-for="CategoryId" class="text-danger"></span>
-            </div>
-        </div>*@
+                <div class="form-group">
+                    <label asp-for="CategoryId" class="mb-2 form-labelss"></label>
+                    <select asp-for="CategoryId" asp-items="ViewBag.catgeoryDropdown" class="form-control">
+                        <option value="">-- Select Category --</option>
+                    </select>
+                    <span asp-validation-for="CategoryId" class="text-danger"></span>
+                </div>
+            </div>*@
 
 
         <div class="col-sm-3">
             <div class="form-group">
-            <label asp-for="CategoryId" class="mb-2 form-labelss"></label>
-            <select asp-for="CategoryId" asp-items="(await _CategoryRepository.GetCategories()).Select(x=> new SelectListItem() { Text =x.Name,Value=x.Id.ToString()})" class="form-control">
-            <option value="">-- Select Category --</option>
-            </select>
-            <span asp-validation-for="CategoryId" class="text-danger"></span>
+                <label asp-for="CategoryId" class="mb-2 form-labelss"></label>
+                <select asp-for="CategoryId" asp-items="(await _CategoryRepository.GetCategories()).Select(x=> new SelectListItem() { Text =x.Name,Value=x.Id.ToString()})" class="form-control">
+                    <option value="">-- Select Category --</option>
+                </select>
+                <span asp-validation-for="CategoryId" class="text-danger"></span>
             </div>
-            </div>
+        </div>
         <div class="col-sm-3">
             <div class="form-group">
                 <label asp-for="Title" class="mb-2 form-label"></label>
@@ -142,7 +142,7 @@
 </form>
 @section Scripts{
     @{
-    <partial name="_ValidationScriptsPartial" />
+        <partial name="_ValidationScriptsPartial" />
         //if (ViewBag.IsSuccess != null)
         //{
         //    if (ViewBag.IsSuccess)
@@ -156,28 +156,28 @@
         //        </script>
         //    }
         //}
-    <script>
-        function showBookImage(input) {
-            if (input.files && input.files[0]) {
-                var reader = new FileReader();
-                reader.onload = function (e) {
-                    $('#imgBookCover').css('visibility', 'visible');
-                    $('#imgBookCover').attr('src', e.target.result);
+        <script>
+            function showBookImage(input) {
+                if (input.files && input.files[0]) {
+                    var reader = new FileReader();
+                    reader.onload = function (e) {
+                        $('#imgBookCover').css('visibility', 'visible');
+                        $('#imgBookCover').attr('src', e.target.result);
+                    }
+                    reader.readAsDataURL(input.files[0]);
                 }
-                reader.readAsDataURL(input.files[0]);
             }
-        }
-        function myComplete(data) {
-            //alert('I am from Complete');
-        }
-        function mySuccess(data) {
-            //alert('I am from Success');
-            debugger;
-            swal('Yeah!', 'Book Added Successfully', 'success');
-        }
-        function myFailure(data) {
-            //alert('I am from Failure');
-        }
-    </script>
+            function myComplete(data) {
+                //alert('I am from Complete');
+            }
+            function mySuccess(data) {
+                //alert('I am from Success');
+                debugger;
+                swal('Yeah!', 'Book Added Successfully', 'success');
+            }
+            function myFailure(data) {
+                //alert('I am from Failure');
+            }
+        </script>
     }
 }

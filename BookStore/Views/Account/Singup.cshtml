@@ -1,0 +1,62 @@
+﻿@model BookStore.Models.SingUpUserModel
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container">
+    <div class="card my-5">
+        <div class="card-header bg-gradient">
+            <h4 class="text-success">Sing Up</h4>
+        </div>
+        <div class="card-body">
+            <hr />
+            <div class="row">
+                <div class="col-md-6">
+                    <embed src="~/Images/svg/Signup.svg" />
+                </div>
+                <div class="col-md-6">
+                    <form asp-action="Singup">
+                        <div asp-validation-summary="ModelOnly" class="text-danger font-weight-bold"></div>
+                        <div class="form-group">
+                            <label asp-for="FirstName" class="control-label"></label>
+                            <input asp-for="FirstName" class="form-control" />
+                            <span asp-validation-for="FirstName" class="text-danger"></span>
+                        </div> <div class="form-group">
+                            <label asp-for="LastName" class="control-label"></label>
+                            <input asp-for="LastName" class="form-control" />
+                            <span asp-validation-for="LastName" class="text-danger"></span>
+                        </div> <div class="form-group">
+                            <label asp-for="DateofBirth" class="control-label"></label>
+                            <input asp-for="DateofBirth" max="@DateTime.Now.ToString("yyyy-MM-dd")" min="@DateTime.Now.AddYears(-120).ToString("yyyy-MM-dd")" class="form-control" />
+                            <span asp-validation-for="DateofBirth" class="text-danger"></span>
+                        </div> <div class="form-group">
+                            <label asp-for="Email" class="control-label"></label>
+                            <input asp-for="Email" class="form-control" />
+                            <span asp-validation-for="Email" class="text-danger"></span>
+                        </div> 
+                        <div class="form-group">
+                            <label asp-for="Password" class="control-label"></label>
+                            <input asp-for="Password" class="form-control" />
+                            <span asp-validation-for="Password" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="ConfirmPassword" class="control-label"></label>
+                            <input asp-for="ConfirmPassword" class="form-control" />
+                            <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <input type="submit" value="Create" asp-action="Singup" asp-controller="Account" class="btn btn-primary" />
+                        </div>
+                        <div>
+                            <a class="text-decoration-none" asp-action="Index">Back to List</a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{ await Html.RenderPartialAsync("_ValidationScriptsPartial"); }
+}
