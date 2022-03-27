@@ -49,7 +49,7 @@ namespace BookStore.Controllers
         }
         [Route("singin")]
         [HttpPost]
-        public async Task<IActionResult> Singin(SignInModel signInModel,string returnUrl)
+        public async Task<IActionResult> Singin(SignInModel signInModel, string returnUrl)
         {
             if (ModelState.IsValid)
             {

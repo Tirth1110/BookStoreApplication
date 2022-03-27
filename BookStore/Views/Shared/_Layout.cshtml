@@ -42,7 +42,6 @@
     @* Production ma exclude "Development" vado call thase*@
     <environment exclude="Development">
         <script src="~/lib/jquery/dist/jquery.min.js"></script>
-        <script src="~/jquery-ajax-unobtrusive/jquery.unobtrusive-ajax.js"></script>
     </environment>
     @*Development ma include "Development" vado call thase*@
     <environment include="Development">
@@ -53,9 +52,9 @@
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@@popperjs/core@2.10.2/dist/umd/popper.min.js" integrity="sha384-7+zCNj/IqJ95wo16oMtfsKbZ9ccEh31eOz1HGyDuCQ6wgnyJNSYdrPa03rtR1zdB" crossorigin="anonymous"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.js"></script>
-
+    <script src="~/jquery-ajax-unobtrusive/jquery.unobtrusive-ajax.js"></script>
     <script>
-                     //$('#my-email-id').hide();
+                                 //$('#my-email-id').hide();
     </script>
     @await RenderSectionAsync("Scripts", required: false)
 </body>

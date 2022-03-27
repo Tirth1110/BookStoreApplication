@@ -20,15 +20,12 @@
     var newBookAlertConfigurationIOption = _newBookConfigurationOption.Value;
 }
 
-
 @*Using IOptionsSnapshot *@
 @{
     var newBookAlertConfigurationIOptionsSnapshot = _newBookConfigurationOptionSnapshot.Value;
 }
 
-
 @{
-
     //Get("InternalBook") && Get("ThirdPartyBook") Gets from Startup Files
     var _bookBookAlertConfigs = _newBookConfigurationOptionSnapshot.Get("InternalBook");
     var _thirdPartyBookAlertConfigs = _newBookConfigurationOptionSnapshot.Get("ThirdPartyBook");
@@ -81,8 +78,6 @@
             </div>
         </div>
     </nav>
-
-
 
     @* Using _configuration method *@
     @if (_configuration.GetValue<bool>("NewBookAlert:DisplayBookAlert"))

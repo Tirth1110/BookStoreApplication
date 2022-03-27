@@ -1,5 +1,6 @@
 ﻿using BookStore.Models;
 using BookStore.Repository;
+using BookStore.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
@@ -21,8 +22,16 @@ namespace BookStore.Controllers
         private readonly IMessageRepository _messageRepository;
         private readonly NewBookAlertConfig _newBookAlertConfigs;
         private readonly NewBookAlertConfig _thirdPartyBookAlertConfigs;
+        private readonly IUserServices _userServices;
 
-        public HomeController(ILogger<HomeController> logger, IConfiguration configuration, IOptions<NewBookAlertConfig> newBookAlertConfigs, IOptionsSnapshot<NewBookAlertConfig> newBookAlertConfigsIOptionSnapshot,IMessageRepository messageRepository)
+
+        public HomeController(ILogger<HomeController> logger,
+            IConfiguration configuration,
+            IOptions<NewBookAlertConfig> newBookAlertConfigs,
+            IOptionsSnapshot<NewBookAlertConfig> newBookAlertConfigsIOptionSnapshot,
+            IMessageRepository messageRepository,
+            IUserServices userServices
+            )
         {
             _logger = logger;
             _configuration = configuration;
@@ -38,6 +47,10 @@ namespace BookStore.Controllers
 
             #region message Repository
             _messageRepository = messageRepository;
+            #endregion
+
+            #region Get User Id Using UserServices
+            _userServices = userServices;
             #endregion
         }
 
@@ -152,6 +165,11 @@ namespace BookStore.Controllers
             var value = _messageRepository.GetName();
             #endregion
 
+
+            #region Get User Id as String & isUserLogged as Boolean(Bool)
+            var userId = _userServices.GetUserId();
+            var isUserLogged = _userServices.IsAuthencated();
+            #endregion
             return View();
         }
         public IActionResult Privacy(int id, string name)
