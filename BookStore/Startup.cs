@@ -86,6 +86,11 @@ namespace BookStore
             services.Configure<NewBookAlertConfig>("InternalBook", _configuration.GetSection("NewBookAlert"));
             services.Configure<NewBookAlertConfig>("ThirdPartyBook", _configuration.GetSection("ThirdPartyBook"));
             #endregion
+
+            //For Mail Service
+            services.Configure<SMTPConfigModel>(_configuration.GetSection("SMTPConfig"));
+            services.AddScoped<IEmailServices, EmailServices>();
+
         }
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)

@@ -23,6 +23,7 @@ namespace BookStore.Controllers
         private readonly NewBookAlertConfig _newBookAlertConfigs;
         private readonly NewBookAlertConfig _thirdPartyBookAlertConfigs;
         private readonly IUserServices _userServices;
+        private readonly IEmailServices _emailServices;
 
 
         public HomeController(ILogger<HomeController> logger,
@@ -30,8 +31,8 @@ namespace BookStore.Controllers
             IOptions<NewBookAlertConfig> newBookAlertConfigs,
             IOptionsSnapshot<NewBookAlertConfig> newBookAlertConfigsIOptionSnapshot,
             IMessageRepository messageRepository,
-            IUserServices userServices
-            )
+            IUserServices userServices,
+            IEmailServices emailServices)
         {
             _logger = logger;
             _configuration = configuration;
@@ -52,6 +53,10 @@ namespace BookStore.Controllers
             #region Get User Id Using UserServices
             _userServices = userServices;
             #endregion
+
+            #region Assign _emailServices
+            _emailServices = emailServices;
+            #endregion
         }
 
         #region [ViewData] is Attribute
@@ -70,7 +75,7 @@ namespace BookStore.Controllers
         //[Route("home/index")]
         #endregion
         //[Route("[controller/action]")]
-        public IActionResult Index()
+        public async Task<ViewResult> Index()
         {
             #region Start ViewBag Concept
             ViewBag.MyName = "Shah's Store";
@@ -110,7 +115,7 @@ namespace BookStore.Controllers
                 Title = "C++ Book",
             };
 
-            #region
+            #region Using ViewData Attribute
             myPropertyData = "Hello I am Tirth";
             #endregion
 
@@ -169,6 +174,16 @@ namespace BookStore.Controllers
             var userId = _userServices.GetUserId();
             var isUserLogged = _userServices.IsAuthencated();
             #endregion
+
+
+            #region  Send Email Using HTML Template
+            UserEmailOptions options = new UserEmailOptions
+            {
+                ToEmails = new List<string>() { "tirthshah111099@gmail.com" }
+            };
+            await _emailServices.SendTestEmail(options);
+            #endregion
+
             return View();
         }
         public IActionResult Privacy(int id, string name)
