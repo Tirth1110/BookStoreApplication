@@ -18,8 +18,8 @@ namespace BookStore.Services
 
         public async Task SendTestEmail(UserEmailOptions userEmailOptions)
         {
-            userEmailOptions.Subjects = "This Is Demo Message from Book Store Application";
-            userEmailOptions.Body = GetEmailBody("EmailTemplate");
+            userEmailOptions.Subjects = UpdatePlaceHolders("This Is Demo Message from Book Store Application", userEmailOptions.PlaceHolders);
+            userEmailOptions.Body = UpdatePlaceHolders(GetEmailBody("EmailTemplate"), userEmailOptions.PlaceHolders);
             await SendEmail(userEmailOptions);
         }
         public EmailServices(IOptions<SMTPConfigModel> smtpConfig)
@@ -39,7 +39,7 @@ namespace BookStore.Services
             {
                 mail.To.Add(toEmail);
             }
-            
+
             SmtpClient smtpClients = new SmtpClient();
             smtpClients.Credentials = new NetworkCredential(_smtpConfig.SenderAddress, _smtpConfig.Password);
             smtpClients.Host = "smtp.gmail.com";
@@ -53,6 +53,21 @@ namespace BookStore.Services
         {
             var body = File.ReadAllText(string.Format(templatePath, templateName));
             return body;
+        }
+
+        private string UpdatePlaceHolders(string text, List<KeyValuePair<string, string>> keyValuePairs)
+        {
+            if (!string.IsNullOrEmpty(text) && keyValuePairs != null)
+            {
+                foreach (var placeHolder in keyValuePairs)
+                {
+                    if (text.Contains(placeHolder.Key))
+                    {
+                        text = text.Replace(placeHolder.Key, placeHolder.Value);
+                    }
+                }
+            }
+            return text;
         }
     }
 }

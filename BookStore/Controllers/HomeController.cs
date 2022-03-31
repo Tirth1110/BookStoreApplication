@@ -179,7 +179,12 @@ namespace BookStore.Controllers
             #region  Send Email Using HTML Template
             UserEmailOptions options = new UserEmailOptions
             {
-                ToEmails = new List<string>() { "tirthshah111099@gmail.com" }
+                ToEmails = new List<string>() { "tirthshah111099@gmail.com" },
+                PlaceHolders = new List<KeyValuePair<string, string>>()
+                {
+                    new KeyValuePair<string, string>("{{UserName}}", "Shah Tirth"),
+                    new KeyValuePair<string, string>("{{instagramUrl}}", "htttps://www.instagram.com/shah__tirth")
+                }
             };
             await _emailServices.SendTestEmail(options);
             #endregion
@@ -205,7 +210,6 @@ namespace BookStore.Controllers
         //{
         //    return View();
         //}
-
         //use name if we change in Route("contact-us") but we do not need in application where Name is called 
         //[Route("contact-us",Name = "contact-us")]
         public IActionResult ContactUs()
