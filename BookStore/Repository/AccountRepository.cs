@@ -65,7 +65,10 @@ namespace BookStore.Repository
             var user = await _userManager.FindByIdAsync(userId);
             return await _userManager.ChangePasswordAsync(user, changePasswordModel.CurrentPassword, changePasswordModel.NewPassword);
         }
-
+        public async Task<IdentityResult> ConfirmEmailAsync(string userId, string token)
+        {
+            return await _userManager.ConfirmEmailAsync(await _userManager.FindByIdAsync(userId), token);
+        }
         private async Task SendEmailForConfirmtion(ApplicationUser applicationUser, string token)
         {
             var hostName = _configuration.GetSection("Application:AppDomain").Value;
@@ -78,8 +81,7 @@ namespace BookStore.Repository
                 PlaceHolders = new List<KeyValuePair<string, string>>()
                 {
                     new KeyValuePair<string, string>("{{UserName}}", applicationUser.FirstName +" "+applicationUser.LastName),
-                    new KeyValuePair<string, string>("{{TokenLink}}",
-                    string.Format(hostName+emailConfirmation,applicationUser.Id,token))
+                    new KeyValuePair<string, string>("{{TokenLink}}",string.Format(hostName + emailConfirmation ,applicationUser.Id,token))
                 }
             };
             await _emailServices.SendEmailForConfirmation(options);

@@ -1,0 +1,23 @@
+﻿@{
+    ViewData["Title"] = "ConfirmEmail";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container">
+    <div class="row">
+        <div class="col-sm-6 offset-sm-2">
+            @if (ViewBag.IsSucceeded==true)
+            {
+                <div class="alert alert-success" role="alert">
+                    <b>Your Email Verified Successfully</b>
+                </div>
+            }
+            else
+            {
+                <div class="alert alert-danger" role="alert">
+                    <b>Your Token Has Been Expired</b>
+                </div>
+            }
+        </div>
+    </div>
+</div>

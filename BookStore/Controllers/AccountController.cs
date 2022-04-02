@@ -104,5 +104,19 @@ namespace BookStore.Controllers
             }
             return View(changePasswordModel);
         }
+        [HttpGet("confirm-email")]
+        public async Task<ViewResult> ConfirmEmail(string userId, string token)
+        {
+            if (!string.IsNullOrEmpty(userId) && !string.IsNullOrEmpty(token))
+            {
+                token = token.Replace(' ', '+');
+                var result = await _accountRepository.ConfirmEmailAsync(userId, token);
+                if (result.Succeeded)
+                {
+                    ViewBag.IsSucceeded = true;
+                }
+            }
+            return View(); 
+        }
     }
 }
