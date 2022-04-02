@@ -46,8 +46,12 @@ namespace BookStore
             //    .AddEntityFrameworkStores<BookStoreContext>();
 
             //Add Some Column In IdentityUser Tbl
+            //services.AddIdentity<ApplicationUser, IdentityRole>()
+            //    .AddEntityFrameworkStores<BookStoreContext>();
+
+            //Create A Token for Email Confirmation 
             services.AddIdentity<ApplicationUser, IdentityRole>()
-                .AddEntityFrameworkStores<BookStoreContext>();
+                .AddEntityFrameworkStores<BookStoreContext>().AddDefaultTokenProviders();
 
             //Change Password formate for IdentityBy Default Given
             services.Configure<IdentityOptions>(options =>

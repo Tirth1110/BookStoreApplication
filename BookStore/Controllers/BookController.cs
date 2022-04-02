@@ -106,7 +106,6 @@ namespace BookStore.Controllers
                     bookModel.BookPdfUrl = await UploadImages(folder, bookModel.BookPdf);
                 }
                 #endregion
-
                 int id = await _bookRepository.AddNewBook(bookModel);
                 if (id > 0)
                 {

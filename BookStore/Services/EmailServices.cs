@@ -15,11 +15,16 @@ namespace BookStore.Services
     {
         private const string templatePath = @"EmailTemplate/{0}.html";
         private readonly SMTPConfigModel _smtpConfig;
-
         public async Task SendTestEmail(UserEmailOptions userEmailOptions)
         {
             userEmailOptions.Subjects = UpdatePlaceHolders("This Is Demo Message from Book Store Application", userEmailOptions.PlaceHolders);
             userEmailOptions.Body = UpdatePlaceHolders(GetEmailBody("EmailTemplate"), userEmailOptions.PlaceHolders);
+            await SendEmail(userEmailOptions);
+        }
+        public async Task SendEmailForConfirmation(UserEmailOptions userEmailOptions)
+        {
+            userEmailOptions.Subjects = UpdatePlaceHolders("Hello {{UserName}}, Confirm Your Email here...", userEmailOptions.PlaceHolders);
+            userEmailOptions.Body = UpdatePlaceHolders(GetEmailBody("EmailConfirm"), userEmailOptions.PlaceHolders);
             await SendEmail(userEmailOptions);
         }
         public EmailServices(IOptions<SMTPConfigModel> smtpConfig)
@@ -54,7 +59,6 @@ namespace BookStore.Services
             var body = File.ReadAllText(string.Format(templatePath, templateName));
             return body;
         }
-
         private string UpdatePlaceHolders(string text, List<KeyValuePair<string, string>> keyValuePairs)
         {
             if (!string.IsNullOrEmpty(text) && keyValuePairs != null)
