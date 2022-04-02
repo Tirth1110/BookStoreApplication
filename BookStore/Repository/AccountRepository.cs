@@ -48,7 +48,7 @@ namespace BookStore.Repository
         {
             var userId = _userServices.GetUserId();
             var user = await _userManager.FindByIdAsync(userId);
-           return await _userManager.ChangePasswordAsync(user, changePasswordModel.CurrentPassword, changePasswordModel.NewPassword);
+            return await _userManager.ChangePasswordAsync(user, changePasswordModel.CurrentPassword, changePasswordModel.NewPassword);
         }
     }
 }

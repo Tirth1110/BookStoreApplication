@@ -177,16 +177,16 @@ namespace BookStore.Controllers
 
 
             #region  Send Email Using HTML Template
-            UserEmailOptions options = new UserEmailOptions
-            {
-                ToEmails = new List<string>() { "tirthshah111099@gmail.com" },
-                PlaceHolders = new List<KeyValuePair<string, string>>()
-                {
-                    new KeyValuePair<string, string>("{{UserName}}", "Shah Tirth"),
-                    new KeyValuePair<string, string>("{{instagramUrl}}", "htttps://www.instagram.com/shah__tirth")
-                }
-            };
-            await _emailServices.SendTestEmail(options);
+            //UserEmailOptions options = new UserEmailOptions
+            //{
+            //    ToEmails = new List<string>() { "tirthshah111099@gmail.com" },
+            //    PlaceHolders = new List<KeyValuePair<string, string>>()
+            //    {
+            //        new KeyValuePair<string, string>("{{UserName}}", "Shah Tirth"),
+            //        new KeyValuePair<string, string>("{{instagramUrl}}", "htttps://www.instagram.com/shah__tirth")
+            //    }
+            //};
+            //await _emailServices.SendTestEmail(options);
             #endregion
 
             return View();

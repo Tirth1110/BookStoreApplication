@@ -16,13 +16,11 @@ namespace BookStore.Controllers
         {
             _accountRepository = accountRepository;
         }
-
         [Route("singup")]
         public async Task<ViewResult> Singup()
         {
             return View();
         }
-
         [Route("singup")]
         [HttpPost]
         public async Task<IActionResult> Singup(SingUpUserModel userModel)
@@ -63,7 +61,15 @@ namespace BookStore.Controllers
                     }
                     return RedirectToAction("index", "home");
                 }
-                ModelState.AddModelError("", "Invalid User Name Password");
+                //ModelState.AddModelError("", "Invalid User Name Password");
+                if (result.IsNotAllowed)
+                {
+                    ModelState.AddModelError("", "Login is Not Allowed");
+                }
+                else
+                {
+                    ModelState.AddModelError("", "Invalid User Name Or Password");
+                }
             }
             return View(signInModel);
         }
@@ -73,7 +79,6 @@ namespace BookStore.Controllers
             await _accountRepository.SingOutAsync();
             return RedirectToAction("index", "home");
         }
-
         [Route("change-password")]
         public IActionResult ChangePassword()
         {

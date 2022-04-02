@@ -58,6 +58,9 @@ namespace BookStore
                 options.Password.RequireLowercase = false;
                 options.Password.RequireUppercase = false;
                 options.Password.RequireNonAlphanumeric = false;
+
+                //If SignIn.RequireConfirmedEmail = true; then in signIn Action is result.IsNotAllowed Email must approved or active 
+                options.SignIn.RequireConfirmedEmail = true;
             });
             //for Login Redirect if not logged in then redirection 
             services.ConfigureApplicationCookie(config =>
@@ -68,7 +71,7 @@ namespace BookStore
 
             services.AddControllersWithViews();
 
-            //add All IRepository & Repository as Services
+            //Add All IRepository & Repository as Services
             services.AddScoped<IBookRepository, BookRepository>();
             services.AddScoped<ILanguageRepository, LanguageRepository>();
             services.AddScoped<ICategoryRepository, CategoryRepository>();
