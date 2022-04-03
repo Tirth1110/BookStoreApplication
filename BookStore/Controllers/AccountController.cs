@@ -68,6 +68,10 @@ namespace BookStore.Controllers
                 {
                     ModelState.AddModelError("", "Login is Not Allowed");
                 }
+                else if (result.IsLockedOut)
+                {
+                    ModelState.AddModelError("", "Account Blocked Try after some times");
+                }
                 else
                 {
                     ModelState.AddModelError("", "Invalid User Name Or Password");

@@ -65,6 +65,10 @@ namespace BookStore
 
                 //If SignIn.RequireConfirmedEmail = true; then in signIn Action is result.IsNotAllowed Email must approved or active 
                 options.SignIn.RequireConfirmedEmail = true;
+
+                //lockout the user if password put incorrect like banking application
+                options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(10);
+                options.Lockout.MaxFailedAccessAttempts = 3;
             });
             //for Login Redirect if not logged in then redirection 
             services.ConfigureApplicationCookie(config =>

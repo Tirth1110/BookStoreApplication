@@ -71,7 +71,7 @@ namespace BookStore.Repository
         }
         public async Task<SignInResult> PasswordSingInAsync(SignInModel signInModel)
         {
-            var result = await _signInManager.PasswordSignInAsync(signInModel.Email, signInModel.Password, signInModel.RememberMe, false);
+            var result = await _signInManager.PasswordSignInAsync(signInModel.Email, signInModel.Password, signInModel.RememberMe, true);
             return result;
         }
         public async Task SingOutAsync()
