@@ -1,19 +1,43 @@
-﻿@{
+﻿@model EmailConfirmModel
+@{
     ViewData["Title"] = "ConfirmEmail";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
 <div class="container">
     <div class="row">
-        <div class="col-sm-6 offset-sm-2">
-            @if (ViewBag.IsSucceeded==true)
+        <div class="col-sm-6 offset-sm-3 text-center">
+            @if (ViewBag.IsSucceeded == true)
             {
-                <div class="alert alert-success" role="alert">
-                    <b>Your Email Verified Successfully</b>
-                </div>
+                @if (Model.EmailVerify == true)
+                {
+                    <div class="alert alert-success" role="alert">
+                        <b>Your Email Verified Successfully</b>
+                    </div>
+                }
+                else
+                {
+                    @if (Model.EmailSent)
+                    {
+                        <b>Email Already Sent on Registered Email Id</b>
+                    }
+                    else
+                    {
+                        <strong>We Have Sent an email on your email id click on the login </strong>
+                        <form asp-action="ConfirmEmail">
+                            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                            <input hidden asp-for="Email">
+                            <p>Did not Received an Email ? </p>
+                            <div class="form-group">
+                                <input type="submit" value="Resnet Confirnmation Link" class="btn btn-outline-primary" />
+                            </div>
+                        </form>
+                    }
+                }
             }
             else
             {
+
                 <div class="alert alert-danger" role="alert">
                     <b>Your Token Has Been Expired</b>
                 </div>

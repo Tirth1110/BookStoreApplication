@@ -1,5 +1,6 @@
 ﻿
 @inject Microsoft.AspNetCore.Identity.SignInManager<ApplicationUser> _signInManager
+
 @if (_signInManager.IsSignedIn(User))
 {
     <div class="dropdown">
@@ -8,9 +9,9 @@
                 @User.Identity.Name.Substring(0, 1).ToString().ToUpper()*@
             Hello ,
             <span class="btn btn-secondary rounded-circle">
+                @*Here FindFirst("UserFirstName") && User.FindFirst("UserLastName") comes from*@
                 @(User.FindFirst("UserFirstName").Value.ToString().Substring(0, 1) + "" + User.FindFirst("UserLastName").Value.ToString().Substring(0, 1))
             </span>
-
             <span class="caret"></span>
         </button>
         <ul class="dropdown-menu">

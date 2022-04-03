@@ -13,7 +13,8 @@ namespace BookStore.Helpers
     {
         public ApplicationUserClaimsPrinicialFactory(UserManager<ApplicationUser> userManager,
             RoleManager<IdentityRole> roleManager,
-            IOptions<IdentityOptions> options) : base(userManager, roleManager, options)
+            IOptions<IdentityOptions> options)
+            : base(userManager, roleManager, options)
         {
 
         }

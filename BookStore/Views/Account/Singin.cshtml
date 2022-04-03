@@ -16,7 +16,7 @@
                 <div class="col-md-6">
                     @* Remove asp-action="Singin" for redirection for last opened page *@
                     @*<form asp-action="Singin">*@
-                        <form method="post">
+                    <form method="post">
                         <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                         <div class="form-group">
                             <label asp-for="Email" class="control-label"></label>
@@ -37,7 +37,9 @@
                             <input type="submit" value="Singin" class="btn btn-primary" />
                         </div><div>
                             <p>
-                                Not Have ?  <a class="text-decoration-none" asp-controller="Account" asp-action="singup">Sing Up</a>
+                                Not Have ?  <a class="text-decoration-none" asp-controller="Account" asp-action="singup"> Sing Up 😊</a>
+                                            <br />
+                                Missing Your Password ?<a asp-action="ForgotPassword" asp-controller="Account"> ForgotPassword 😢</a>
                             </p>
                         </div>
                     </form>
@@ -48,7 +50,6 @@
         </div>
     </div>
 </div>
-
 @section Scripts {
     @{ await Html.RenderPartialAsync("_ValidationScriptsPartial"); }
 }

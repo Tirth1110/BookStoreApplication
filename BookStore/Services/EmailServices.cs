@@ -27,6 +27,12 @@ namespace BookStore.Services
             userEmailOptions.Body = UpdatePlaceHolders(GetEmailBody("EmailConfirm"), userEmailOptions.PlaceHolders);
             await SendEmail(userEmailOptions);
         }
+        public async Task SendEmailForForgetPassword(UserEmailOptions userEmailOptions)
+        {
+            userEmailOptions.Subjects = UpdatePlaceHolders("Hello {{UserName}}, Forget Your Password here...", userEmailOptions.PlaceHolders);
+            userEmailOptions.Body = UpdatePlaceHolders(GetEmailBody("ForgetPassword"), userEmailOptions.PlaceHolders);
+            await SendEmail(userEmailOptions);
+        }
         public EmailServices(IOptions<SMTPConfigModel> smtpConfig)
         {
             _smtpConfig = smtpConfig.Value;
