@@ -1,6 +1,7 @@
 ﻿using BookStore.Models;
 using BookStore.Repository;
 using BookStore.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
@@ -212,6 +213,7 @@ namespace BookStore.Controllers
         //}
         //use name if we change in Route("contact-us") but we do not need in application where Name is called 
         //[Route("contact-us",Name = "contact-us")]
+        [Authorize(Roles ="Admin")]
         public IActionResult ContactUs()
         {
             return View();

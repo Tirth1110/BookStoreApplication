@@ -126,15 +126,15 @@ namespace BookStore
                 #region Conventional Routing Ex.
 
                 //endpoints.MapDefaultControllerRoute();
-                //endpoints.MapControllerRoute(
-                //    name: "Default",
-                //    pattern: "{controller=Home}/{action=Index}/{id?}");
+                endpoints.MapControllerRoute(
+                    name: "Default",
+                    pattern: "{controller=Home}/{action=Index}/{id?}");
 
 
                 //for Admin Area 
-                endpoints.MapControllerRoute(
-                  name: "MyArea",
-                  pattern: "{area:exists}/{controller=Home}/{action=Index}/{id?}");
+                //endpoints.MapControllerRoute(
+                //  name: "MyArea",
+                //  pattern: "{area:exists}/{controller=Home}/{action=Index}/{id?}");
 
                 #region Multi Optional Parameter
                 //endpoints.MapControllerRoute(

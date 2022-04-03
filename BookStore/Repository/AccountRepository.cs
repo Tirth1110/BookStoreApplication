@@ -13,12 +13,14 @@ namespace BookStore.Repository
     {
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly SignInManager<ApplicationUser> _signInManager;
+        private readonly RoleManager<IdentityRole> _roleManager;
         private readonly IUserServices _userServices;
         private readonly IEmailServices _emailServices;
         private readonly IConfiguration _configuration;
 
         public AccountRepository(UserManager<ApplicationUser> userManager,
             SignInManager<ApplicationUser> signInManager,
+            RoleManager<IdentityRole> roleManager,
             IUserServices userServices,
             IEmailServices emailServices,
             IConfiguration configuration)
@@ -28,6 +30,7 @@ namespace BookStore.Repository
             _userServices = userServices;
             _emailServices = emailServices;
             _configuration = configuration;
+            _roleManager = roleManager;
         }
         public async Task<IdentityResult> CreateUserAsync(SingUpUserModel userModel)
         {
