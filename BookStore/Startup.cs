@@ -70,6 +70,11 @@ namespace BookStore
                 options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(10);
                 options.Lockout.MaxFailedAccessAttempts = 3;
             });
+
+            //for token life span (means token expire time expand)
+            services.Configure<DataProtectionTokenProviderOptions>(
+                option => option.TokenLifespan = TimeSpan.FromHours(1));
+
             //for Login Redirect if not logged in then redirection 
             services.ConfigureApplicationCookie(config =>
             {
