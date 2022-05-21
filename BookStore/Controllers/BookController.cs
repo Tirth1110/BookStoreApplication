@@ -39,9 +39,9 @@ namespace BookStore.Controllers
             return View(bookFromRepo);
         }
         //[Route("book/book-details/{id}", Name = "bookDetailsRoute")]
-        [Route("book-details/{id}", Name = "bookDetailsRoute")]
         //[Route("~/book-details/{id:int}", Name = "bookDetailsRoute")]
-        public async Task<ViewResult> GetBook(int Id)
+        [Route("~/book-details/{id?}/{sulgurl?}", Name = "bookDetailsRoute")]
+        public async Task<IActionResult> GetBook(int Id)
         {
             var bookdata = await _bookRepository.GetBookById(Id);
             return View(bookdata);

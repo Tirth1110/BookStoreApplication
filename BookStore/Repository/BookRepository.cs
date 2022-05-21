@@ -14,7 +14,7 @@ namespace BookStore.Repository
         private readonly BookStoreContext _context;
         private readonly IConfiguration _configuration;
 
-        public BookRepository(BookStoreContext context,IConfiguration configuration)
+        public BookRepository(BookStoreContext context, IConfiguration configuration)
         {
             _context = context;
             _configuration = configuration;
@@ -25,6 +25,7 @@ namespace BookStore.Repository
             {
                 Id = bookModel.Id,
                 Title = bookModel.Title,
+                SlugUrl = bookModel.Title.Replace(' ', '-').ToString().ToLower(),
                 Author = bookModel.Author,
                 LanguageId = bookModel.LanguageId,
                 Description = bookModel.Description,
@@ -62,9 +63,10 @@ namespace BookStore.Repository
                 LanguageId = book.LanguageId,
                 LanguageName = book.Language.Name,
                 Title = book.Title,
+                SlugUrl = book.SlugUrl,
                 TotalPages = book.TotalPages,
                 CoverPhotoUrl = book.CoverPhotoUrl
-            }).OrderByDescending(b=>b.Id).ToListAsync();
+            }).OrderByDescending(b => b.Id).ToListAsync();
         }
         #region Get top (count from view) Book For Home Page 
         public async Task<List<BookModel>> GetTopBookAsync(int count)
@@ -79,9 +81,10 @@ namespace BookStore.Repository
                     LanguageId = book.LanguageId,
                     LanguageName = book.Language.Name,
                     Title = book.Title,
+                    SlugUrl = book.SlugUrl,
                     TotalPages = book.TotalPages,
                     CoverPhotoUrl = book.CoverPhotoUrl
-                }).Take(count).OrderByDescending(b => b.Title).ToListAsync();
+                }).Take(count).OrderByDescending(b => b.Id).ToListAsync();
         }
         #endregion
         public async Task<BookModel> GetBookById(int Id)
@@ -91,6 +94,7 @@ namespace BookStore.Repository
                  {
                      Id = book.Id,
                      Title = book.Title,
+                     SlugUrl = book.SlugUrl,
                      Author = book.Author,
                      Description = book.Description,
 
@@ -120,7 +124,7 @@ namespace BookStore.Repository
 
         public string AppName()
         {
-            return _configuration["AppName"]; 
+            return _configuration["AppName"];
         }
     }
 }

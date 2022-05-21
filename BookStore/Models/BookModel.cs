@@ -16,6 +16,7 @@ namespace BookStore.Models
         //if ctor created then pass "Azure" 
         //[MyCustomValidation("Azure")]
         public string Title { get; set; }
+        public string SlugUrl { get; set; }
         [Required]
         public string Author { get; set; }
         [StringLength(500, MinimumLength = 5)]
@@ -51,7 +52,7 @@ namespace BookStore.Models
         //PDF File
         [Display(Name = "Choose Pdf File")]
         [Required]
-        public IFormFile BookPdf{ get; set; }
-        public string BookPdfUrl{ get; set; }
+        public IFormFile BookPdf { get; set; }
+        public string BookPdfUrl { get; set; }
     }
 }

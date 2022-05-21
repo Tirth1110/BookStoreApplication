@@ -135,10 +135,10 @@ namespace BookStore.Controllers
 
             #endregion
 
-            //var appNameResult = _configuration["AppName"];
-            //var key1 = _configuration["infoObj:key1"];
-            //var key2 = _configuration["infoObj:key2"];
-            //var key3 = _configuration["infoObj:key3:key3obj1"];
+            var appNameResult = _configuration["AppName"];
+            var key1 = _configuration["infoObj:key1"];
+            var key2 = _configuration["infoObj:key2"];
+            var key3 = _configuration["infoObj:key3:key3obj1"];
 
             var result = _configuration.GetValue<bool>("DisplayBookAlert");
             var result1 = _configuration["DisplayBookAlert"];
@@ -196,8 +196,8 @@ namespace BookStore.Controllers
         {
             return View();
         }
-        //[Route("about-us/{id?}/test/{name?}")]
-        //[Route("about-us")]
+        //[Route("~/about-us/{id?}/test/{name?}")]
+        [Route("about-us")]
         public IActionResult AboutUs(int id, string name)
         {
             #region Set Home Page Title
@@ -213,7 +213,7 @@ namespace BookStore.Controllers
         //}
         //use name if we change in Route("contact-us") but we do not need in application where Name is called 
         //[Route("contact-us",Name = "contact-us")]
-        [Authorize(Roles ="Admin")]
+        [Authorize(Roles = "Admin")]
         public IActionResult ContactUs()
         {
             return View();

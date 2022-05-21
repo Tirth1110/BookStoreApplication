@@ -1,9 +1,7 @@
-﻿
-@*@model BookModel*@
-
+﻿@*@model BookModel*@
 
 @*<a class="text-decoration-none" asp-route="bookDetailsRoute" asp-route-Id="@Model.Id" asp-route-titleofBook="@Model.Title">*@
-<a class="text-decoration-none" asp-route="bookDetailsRoute" asp-route-Id="@Model.Id">
+<a class="text-decoration-none" asp-route="bookDetailsRoute" asp-route-Id="@Model.Id" asp-route-slugurl="@Model.SlugUrl">
     <div class="card mb-3">
         <img class="card-img-top img-thumbnail text-center min-height-img" src="/@(string.IsNullOrEmpty(Model.CoverPhotoUrl)?"Images/loader.gif":Model.CoverPhotoUrl)" height="100" width="100" alt="Cover Image of Book Unavalible">
         <div class="card-body">
